@@ -6,7 +6,7 @@
 		<optimization>normal</optimization>
 		<hostname>pfSense</hostname>
 		<dnsserver>8.8.8.8</dnsserver>
-    <dnsserver>1.1.1.1</dnsserver>
+    		<dnsserver>1.1.1.1</dnsserver>
     <domain>localdomain</domain>
 		<dnsallowoverride/>
 		<group>
@@ -56,22 +56,22 @@
     <timezone>America/Denver</timezone>
   </system>
 	<interfaces>
-		<wan>
+		<WAN>
 			<enable/>
 			<if>em0</if>
-      <ipaddr>dhcp</ipaddr>
-      <ipaddrv6></ipaddrv6>
-      <gateway></gateway>
-      <blockpriv>on</blockpriv>
-      <blockbogons>on</blockbogons>
-      <media></media>
-      <mediaopt></mediaopt>
-      <dhcp6-duid></dhcp6-duid>
-      <dhcp6-ia-pd-len>0</dhcp6-is-pd-len>
-      <subnetv6></subnetv6>
-      <gatewayv6></gatewayv6>
-		</wan>
-		<lan>
+			      <ipaddr>dhcp</ipaddr>
+			      <ipaddrv6></ipaddrv6>
+			      <gateway></gateway>
+			      <blockpriv>on</blockpriv>
+			      <blockbogons>on</blockbogons>
+			      <media></media>
+			      <mediaopt></mediaopt>
+			      <dhcp6-duid></dhcp6-duid>
+			      <dhcp6-ia-pd-len>0</dhcp6-is-pd-len>
+			      <subnetv6></subnetv6>
+			      <gatewayv6></gatewayv6>
+		</WAN>
+		<INTERNAL>
 			<enable></enable>
 			<if>em1</if>
 			<ipaddr>192.168.171.2</ipaddr>
@@ -80,14 +80,14 @@
 			<subnetv6></subnetv6>
 			<media></media>
 			<mediaopt></mediaopt>
-			<track6-interface>wan</track6-interface>
-			<track6-prefix-id>0</track6-prefix-id>
+			<track6-interface>WAN</track6-interface>
+			<track6-p/fix-id>0</track6-prefix-id>
       <gateway></gateway>
       <gatewayv6></gatewayv6>
-		</lan>
-    <opt1>
+		</INTERNAL>
+    <DMZ>
       <if>em2</if>
-      <descr><![CDATA[OPT1]]></descr>
+      <descr><![CDATA[DMZ]]></descr>
       <ipaddr>192.168.91.2</ipaddr>
       <subnet>24</subnet>
       <gateway></gateway>
@@ -95,18 +95,18 @@
       <subnetv6></subnetv6>
       <gatewayv6></gatewayv6>
       <enable></enable>
-    </opt1>
+    </DMZ>
 	</interfaces>
 	<staticroutes></staticroutes>
 	<dhcpd>
-		<lan>
+		<INTERNAL>
 			<range>
 				<enable></enable>
         <from>192.168.171.100</from>
 				<to>192.168.171.150</to>
 			</range>
-		</lan>
-    <opt1>
+		</INTERNAL>
+    <DMZ>
       <enable></enable>
 			<range>
 				<from>192.168.171.100</from>
@@ -114,7 +114,7 @@
 			</range>
 	</dhcpd>
 	<dhcpdv6>
-		<lan>
+		<INTERNAL>
 			<enable/>
 			<range>
 				<from>::1000</from>
@@ -122,8 +122,8 @@
 			</range>
 			<ramode>assist</ramode>
 			<rapriority>medium</rapriority>
-		</lan>
-		<opt1>
+		</INTERNAL>
+		<DMZ>
 			<enable/>
 			<range>
 				<from>::1000</from>
@@ -131,7 +131,7 @@
 			</range>
 			<ramode>assist</ramode>
 			<rapriority>medium</rapriority>
-		</opt1>
+		</DMZ>
 	</dhcpdv6>
 	<snmpd>
 		<syslocation></syslocation>
@@ -156,7 +156,7 @@
       <id></id>
       <tracker>1582142671</tracker>
 			<type>block</type>
-      <interface>wan</interface>
+      <interface>WAN</interface>
 			<ipprotocol>inet46</ipprotocol>
       <tag></tag>
       <tagged></tagged>
@@ -187,18 +187,18 @@
 		<rule>
 			<type>pass</type>
 			<ipprotocol>inet</ipprotocol>
-			<descr><![CDATA[Default allow LAN IPv6 to any rule]]></descr>
-			<interface>lan</interface>
+			<descr><![CDATA[Default allow INTERNAL IPv6 to any rule]]></descr>
+			<interface>INTERNAL</interface>
 			<tracker>0100000101</tracker>
 			<source>
-				<network>lan</network>
+				<network>INTERNAL</network>
 			</source>
 			<destination>
 				<any></any>
 			</destination>
 		</rule>
     <separator>
-      <wan></wan>
+      <WAN></WAN>
     </separator>
 	</filter>
 	<shaper>
