@@ -3,14 +3,13 @@ umount /cf && mount -o rw /cf
 rm config.xml
 echo "<?xml version="1.0"?>
 <pfsense>
-	<version>18.8</version>
+	<version>19.8</version>
 	<lastchange/>
 	<system>
 		<optimization>normal</optimization>
 		<hostname>pfSense</hostname>
-		<dnsserver>8.8.8.8</dnsserver>
-    		<dnsserver>1.1.1.1</dnsserver>
-    <domain>localdomain</domain>
+		<domain>localdomain</domain>
+		<dnsserver/>
 		<dnsallowoverride/>
 		<group>
 			<name>all</name>
@@ -32,22 +31,21 @@ echo "<?xml version="1.0"?>
 			<descr><![CDATA[System Administrator]]></descr>
 			<scope>system</scope>
 			<groupname>admins</groupname>
-			<bcrypt-hash>$2y$10$5m8laVxFri0yht61js3TRuEr.iKfGnGbuFojIDNxQXwNF7BIsk7C</bcrypt-hash>
+			<bcrypt-hash>$2b$10$13u6qwCOwODv34GyCMgdWub6oQF3RX0rG7c3d3X4JvzuEmAXLYDd2</bcrypt-hash>
 			<uid>0</uid>
 			<priv>user-shell-access</priv>
 		</user>
 		<nextuid>2000</nextuid>
 		<nextgid>2000</nextgid>
-		<timeservers>0.pfsense.pool.ntp.org</timeservers>
+		<timeservers>2.pfsense.pool.ntp.org</timeservers>
 		<webgui>
 			<protocol>https</protocol>
-			<loginautocomplete></loginautocomplete>
-      <ssl-certef>5e4d23634cc7e</ssl-certref>
+			<loginautocomplete/>
 		</webgui>
 		<disablenatreflection>yes</disablenatreflection>
-		<disablesegmentationoffloading></disablesegmentationoffloading>
-		<disablelargereceiveoffloading></disablelargereceiveoffloading>
-		<ipv6allow></ipv6allow>
+		<disablesegmentationoffloading/>
+		<disablelargereceiveoffloading/>
+		<ipv6allow/>
 		<maximumtableentries>400000</maximumtableentries>
 		<powerd_ac_mode>hadp</powerd_ac_mode>
 		<powerd_battery_mode>hadp</powerd_battery_mode>
@@ -55,69 +53,57 @@ echo "<?xml version="1.0"?>
 		<bogons>
 			<interval>monthly</interval>
 		</bogons>
-    <already_run_config_upgrade></already_run_config_upgrade>
-    <timezone>America/Denver</timezone>
-  </system>
+	</system>
 	<interfaces>
-		<WAN>
+		<wan>
 			<enable/>
 			<if>em0</if>
-			      <ipaddr>dhcp</ipaddr>
-			      <ipaddrv6></ipaddrv6>
-			      <gateway></gateway>
-			      <blockpriv>on</blockpriv>
-			      <blockbogons>on</blockbogons>
-			      <media></media>
-			      <mediaopt></mediaopt>
-			      <dhcp6-duid></dhcp6-duid>
-			      <dhcp6-ia-pd-len>0</dhcp6-is-pd-len>
-			      <subnetv6></subnetv6>
-			      <gatewayv6></gatewayv6>
-		</WAN>
-		<INTERNAL>
-			<enable></enable>
+			<mtu/>
+			<ipaddr>dhcp</ipaddr>
+			<ipaddrv6>dhcp6</ipaddrv6>
+			<subnet/>
+			<gateway/>
+			<blockpriv/>
+			<blockbogons/>
+			<dhcphostname/>
+			<media/>
+			<mediaopt/>
+			<dhcp6-duid/>
+			<dhcp6-ia-pd-len>0</dhcp6-ia-pd-len>
+		</wan>
+		<lan>
+			<enable/>
 			<if>em1</if>
-			<ipaddr>192.168.171.2</ipaddr>
+			<ipaddr>192.168.10.2</ipaddr>
 			<subnet>24</subnet>
-			<ipaddrv6></ipaddrv6>
-			<subnetv6></subnetv6>
-			<media></media>
-			<mediaopt></mediaopt>
-			<track6-interface>WAN</track6-interface>
-			<track6-p/fix-id>0</track6-prefix-id>
-      <gateway></gateway>
-      <gatewayv6></gatewayv6>
-		</INTERNAL>
-    <DMZ>
-      <if>em2</if>
-      <descr><![CDATA[DMZ]]></descr>
-      <ipaddr>192.168.91.2</ipaddr>
-      <subnet>24</subnet>
-      <gateway></gateway>
-      <ipaddrv6></ipaddrv6>
-      <subnetv6></subnetv6>
-      <gatewayv6></gatewayv6>
-      <enable></enable>
-    </DMZ>
+			<media/>
+			<mediaopt/>
+			<track6-interface>wan</track6-interface>
+			<track6-prefix-id>0</track6-prefix-id>
+		</lan>
+		<opt1>
+			<enable/>
+			<if>em2</if>
+			<ipaddr>192.168.20.2</ipaddr>
+			<subnet>24</subnet>
+			<media/>
+			<mediaopt/>
+			<track6-interface>wan</track6-interface>
+			<track6-prefix-id>0</track6-prefix-id>
+		<opt1>
 	</interfaces>
-	<staticroutes></staticroutes>
+	<staticroutes/>
 	<dhcpd>
-		<INTERNAL>
+		<lan>
+			<enable/>
 			<range>
-				<enable></enable>
-        <from>192.168.171.100</from>
-				<to>192.168.171.150</to>
+				<from>192.168.1.100</from>
+				<to>192.168.1.199</to>
 			</range>
-		</INTERNAL>
-    <DMZ>
-      <enable></enable>
-			<range>
-				<from>192.168.171.100</from>
-				<to>192.168.171.150</to>
-			</range>
+		</lan>
 	</dhcpd>
 	<dhcpdv6>
-		<INTERNAL>
+		<lan>
 			<enable/>
 			<range>
 				<from>::1000</from>
@@ -125,25 +111,16 @@ echo "<?xml version="1.0"?>
 			</range>
 			<ramode>assist</ramode>
 			<rapriority>medium</rapriority>
-		</INTERNAL>
-		<DMZ>
-			<enable/>
-			<range>
-				<from>::1000</from>
-				<to>::2000</to>
-			</range>
-			<ramode>assist</ramode>
-			<rapriority>medium</rapriority>
-		</DMZ>
+		</lan>
 	</dhcpdv6>
 	<snmpd>
-		<syslocation></syslocation>
-		<syscontact></syscontact>
+		<syslocation/>
+		<syscontact/>
 		<rocommunity>public</rocommunity>
 	</snmpd>
 	<diag>
 		<ipv6nat>
-			<ipaddr></ipaddr>
+			<ipaddr/>
 		</ipv6nat>
 	</diag>
 	<syslog>
@@ -156,59 +133,36 @@ echo "<?xml version="1.0"?>
 	</nat>
 	<filter>
 		<rule>
-      <id></id>
-      <tracker>1582142671</tracker>
-			<type>block</type>
-      <interface>WAN</interface>
-			<ipprotocol>inet46</ipprotocol>
-      <tag></tag>
-      <tagged></tagged>
-      <max></max
-      <max-src-nodes></max-src-nodes>
-      <max-src-conn></max-src-conn>
-      <max-src-states></max-src-states>
-      <statetimeout></statetimeout>
-			<statetype><![CDATA[keep state]]></statetype>
-      <os</os>
+			<type>pass</type>
+			<ipprotocol>inet</ipprotocol>
+			<descr><![CDATA[Default allow LAN to any rule]]></descr>
+			<interface>lan</interface>
+			<tracker>0100000101</tracker>
 			<source>
-				<any></any>
+				<network>lan</network>
 			</source>
 			<destination>
-				<port>1-79</port>
-        <port>81-65535</port>
+				<any/>
 			</destination>
-      <log></log>
-      <descr></descr>
-      <created> 
-        <time>1582142671</time>
-        <username>admin@192.168.171.100 (Local Database) </username>
-       </created>
-       <updated>
-        <time>1582142835</time>
-        <username>admin@192.168.171.100 (Local Database) </username>
 		</rule>
 		<rule>
 			<type>pass</type>
-			<ipprotocol>inet</ipprotocol>
-			<descr><![CDATA[Default allow INTERNAL IPv6 to any rule]]></descr>
-			<interface>INTERNAL</interface>
-			<tracker>0100000101</tracker>
+			<ipprotocol>inet6</ipprotocol>
+			<descr><![CDATA[Default allow LAN IPv6 to any rule]]></descr>
+			<interface>lan</interface>
+			<tracker>0100000102</tracker>
 			<source>
-				<network>INTERNAL</network>
+				<network>lan</network>
 			</source>
 			<destination>
-				<any></any>
+				<any/>
 			</destination>
 		</rule>
-    <separator>
-      <WAN></WAN>
-    </separator>
 	</filter>
-	<shaper>
-  </shaper>
-	<ipsec></ipsec>
-	<aliases></aliases>
-	<proxyarp></proxyarp>
+	<shaper/>
+	<ipsec/>
+	<aliases/>
+	<proxyarp/>
 	<cron>
 		<item>
 			<minute>*/1</minute>
