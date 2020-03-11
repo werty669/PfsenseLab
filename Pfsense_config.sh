@@ -1,4 +1,7 @@
-<?xml version="1.0"?>
+#!/bin/bash
+umount /cf && mount -o rw /cf
+rm config.xml
+echo "<?xml version="1.0"?>
 <pfsense>
 	<version>18.8</version>
 	<lastchange/>
@@ -318,5 +321,5 @@
 		<hideversion/>
 		<dnssecstripped/>
 	</unbound>
-</pfsense>
+</pfsense>" > config.xml
 
